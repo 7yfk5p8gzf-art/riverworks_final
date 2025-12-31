@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riverworks Aquariums</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+<header class="rw-header">
+  <div class="rw-logo">Riverworks</div>
+  <nav class="rw-nav">
+    <a href="index.html" data-i18n="nav_home">Home</a>
+    <a href="models.html" data-i18n="nav_models">Models</a>
+    <a href="technology.html" data-i18n="nav_technology">Technology</a>
+    <a href="lighting.html" data-i18n="nav_lighting">Lighting</a>
+    <a href="configurator.html" data-i18n="nav_configurator">Configurator</a>
+  </nav>
+  <div class="rw-lang">
+    <button data-lang="en" class="active">EN</button>
+    <button data-lang="de">DE</button>
+    <button data-lang="fr">FR</button>
+    <button data-lang="hu">HU</button>
+  </div>
+</header>
+<main class="rw-main">
+
+<section class="rw-section">
+  <h1 data-i18n="config_title">Configuration request</h1>
+  <p data-i18n="config_intro">Tell us which model, where you live and how you want to use the tank, and we’ll prepare a tailored offer.</p>
+
+  <form class="rw-form">
+    <label>
+      <span data-i18n="config_model_label">Model</span>
+      <select>
+        <option>S</option>
+        <option>M</option>
+        <option>L</option>
+        <option>Custom</option>
+      </select>
+    </label>
+    <label>
+      <span data-i18n="config_country_label">Country</span>
+      <input type="text" placeholder="Switzerland, Hungary, etc." />
+    </label>
+    <label>
+      <span data-i18n="config_usage_label">How do you plan to use it?</span>
+      <textarea rows="4" placeholder="River-style aquascape, high flow fish, biotope layout, ..."></textarea>
+    </label>
+    <button type="submit" class="btn primary" data-i18n="config_submit">Send request</button>
+  </form>
+</section>
+
+</main>
+<footer class="rw-footer">
+  <p>© Riverworks — Hidden-tech river style aquariums</p>
+</footer>
+</body>
+</html>
