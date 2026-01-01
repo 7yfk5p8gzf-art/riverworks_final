@@ -163,7 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // configurator submit -> open email with pre-filled body
-const form = document.querySelector(".rw-configurator form");
+const form = document.querySelector("form");
+
 
 if (form) {
   form.addEventListener("submit", (e) => {
@@ -187,7 +188,7 @@ if (form) {
     const target  = "ipkobalint@gmail.com";
     const subject = encodeURIComponent("Configuration request");
 
-    const bodyLines = [
+        const bodyLines = [
       "Model: " + model,
       "Country: " + country,
       "Room / placement: " + room,
@@ -206,18 +207,3 @@ if (form) {
   });
 }
 
-    ];
-
-    const body = encodeURIComponent(bodyLines.join("\n"));
-
-    const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
-
-    window.location.href = mailtoUrl;
-
-    form.reset();
-  });
-}
-
-    });
-  }
-});
