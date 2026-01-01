@@ -17,7 +17,7 @@ const TRANSLATIONS = {
     config_room_placeholder: "Living room wall, room divider, office, studio...",
     config_usage_label: "How do you plan to use it?",
     config_usage_placeholder:
-      "Tell us about your setup. If you chose Custom, please also add your desired dimensions (L×W×H in cm), sump yes/no, cabinet yes/no, lighting and budget.",
+      "River-style aquascape, high flow fish, biotope layout, etc.",
     config_extras_label: "Extras you are interested in",
     config_extra_ato: "ATO (auto top-off)",
     config_extra_light: "Extra lighting options",
@@ -42,7 +42,7 @@ const TRANSLATIONS = {
     config_country_label: "Land",
     config_room_label: "Raum / Platzierung",
     config_room_placeholder:
-      "Wohnzimmerwand, Raumteiler, Büro, Studio ...",
+      "Wohnzimmerwand, Raumteiler, Büro, Studio...",
     config_usage_label: "Wie möchten Sie es nutzen?",
     config_usage_placeholder:
       "River-Style Aquascape, Strömungsliebende Fische, Biotop, etc.",
@@ -98,10 +98,10 @@ const TRANSLATIONS = {
     config_country_label: "Ország",
     config_room_label: "Szoba / elhelyezés",
     config_room_placeholder:
-      "Nappali fal, szobelosztó, iroda, stúdió ...",
+      "Nappali fal, szobelosztó, iroda, stúdió...",
     config_usage_label: "Hogyan tervezed használni?",
     config_usage_placeholder:
-      "Írd le, mire használnád. Ha Custom modellt választottál, írd ide a kívánt méreteket (H×Sz×M cm-ben), sump igen/nem, szekrény igen/nem, világítás és kb. költségkeret.",
+      "Folyóvizes aquascape, erős áramlást kedvelő halak, biotóp, stb.",
     config_extras_label: "Érdeklődöm ezek iránt",
     config_extra_ato: "ATO (automata vízutántöltő)",
     config_extra_light: "Extra világítási opciók",
