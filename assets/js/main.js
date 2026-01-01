@@ -176,11 +176,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const email = form.querySelector('input[type="email"]')?.value || "";
 
       const extras = Array.from(form.querySelectorAll('.rw-checkbox-group input[type="checkbox"]'))
-        .filter(ch => ch.checked)
-        .map(ch => ch.parentElement.textContent.trim())
-        .join(", ");
+  .filter(ch => ch.checked)
+  .map(ch => ch.parentElement.textContent.trim())
+  .join(", ");
 
-      const target = "ipkobalint@gmail.com"; // ide érkezzenek a leadek
+alert("Thank you! Your configuration request is being prepared as an email.");
+
+const target = "ipkobalint@gmail.com";
+ // ide érkezzenek a leadek
       const subject = encodeURIComponent("Configuration request");
       const bodyLines = [
         "Model: " + model,
