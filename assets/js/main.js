@@ -163,7 +163,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // configurator submit -> open email with pre-filled body
-  const form = document.querySelector(".rw-configurator form");
+const form = document.querySelector(".rw-configurator form");
+
 if (form) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -177,8 +178,8 @@ if (form) {
     const extras = Array.from(
       form.querySelectorAll(".rw-checkbox-group input[type='checkbox']")
     )
-      .filter(ch => ch.checked)
-      .map(ch => ch.parentElement.textContent.trim())
+      .filter((ch) => ch.checked)
+      .map((ch) => ch.parentElement.textContent.trim())
       .join(", ");
 
     alert("Thank you! Your configuration request is being prepared as an email.");
@@ -193,6 +194,18 @@ if (form) {
       "Usage: " + usage,
       "Extras: " + (extras || "--"),
       "Customer email: " + email
+    ];
+
+    const body = encodeURIComponent(bodyLines.join("\n"));
+
+    const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
+
+    window.location.href = mailtoUrl;
+
+    form.reset();
+  });
+}
+
     ];
 
     const body = encodeURIComponent(bodyLines.join("\n"));
