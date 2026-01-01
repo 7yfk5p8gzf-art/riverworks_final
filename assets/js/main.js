@@ -168,78 +168,88 @@ document.addEventListener("DOMContentLoaded", () => {
   // alapértelmezett nyelv
   applyLanguage("en");
 
-    // configurator submit -> send data to Google Apps Script
-  const configRoot = document.querySelector(".rw-configurator");
-  if (configRoot) {
-    const form = configRoot.querySelector("form");
-    const submitBtn = configRoot.querySelector('button[type="submit"]');
+  // ----- CONFIGURATOR FORM -> SEND TO GOOGLE APPS SCRIPT -----
+const configRoot = document.querySelector(".rw-configurator");
 
-    // IDE: a frissen bevezetett webalkalmazás URL-je (/exec végű!)
-    const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbxp7shlhmVg7z66WhL0Gdf71HajgmWSlIK6yJ_Sjq3TlQRXSvy0GiIR_I9OaizNUaPMRw/exec";
+if (configRoot) {
+  const form = configRoot.querySelector("form");
+  const submitBtn = configRoot.querySelector('button[type="submit"]');
 
-    const handler = async (e) => {
-      if (e) e.preventDefault();
+  // IDE: a frissen bevezetett webalkalmazás URL-je (/exec végű)
+  const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbxp7shlhmVg7z66WhL0Gdf71HajgmWSlIK6yJ_Sjq3TlQRXSvy0GiIR_I9OaizNUaPMRw/exec";
+   
 
-      const model =
-        configRoot.querySelector("select")?.value || "";
-      const country =
-        configRoot.querySelector('select[name="country"]')?.value || "";
-      const roomInput = configRoot.querySelector('input[name="room"]')
-        || configRoot.querySelector('input[type="text"]');
-      const room = roomInput ? roomInput.value : "";
-      const usage =
-        configRoot.querySelector("textarea")?.value || "";
-      const email =
-        configRoot.querySelector('input[type="email"]')?.value || "";
+  const handler = async (e) => {
+    if (e) e.preventDefault();
 
-      const extras = Array.from(
-        configRoot.querySelectorAll(".rw-checkbox-group input[type='checkbox']")
+    const model =
+      configRoot.querySelector("select")?.value || "";
+
+    const country =
+      configRoot.querySelector('select[name="country"]')?.value || "";
+
+    const roomInput =
+      configRoot.querySelector('input[name="room"]') ||
+      configRoot.querySelector('input[type="text"]');
+    const room = roomInput ? roomInput.value : "";
+
+    const usage =
+      configRoot.querySelector("textarea")?.value || "";
+
+    const email =
+      configRoot.querySelector('input[type="email"]')?.value || "";
+
+    const extras = Array.from(
+      configRoot.querySelectorAll(
+        ".rw-checkbox-group input[type='checkbox']"
       )
-        .filter((ch) => ch.checked)
-        .map((ch) => ch.parentElement.textContent.trim())
-        .join(", ");
+    )
+      .filter((ch) => ch.checked)
+      .map((ch) => ch.parentElement.textContent.trim())
+      .join(", ");
 
-      // minimális ellenőrzés
-      if (!email) {
-        alert("Please enter your email address.");
-        return;
-      }
+    // minimális ellenőrzés
+    if (!email) {
+      alert("Please enter your email address.");
+      return;
+    }
 
-      const payload = new URLSearchParams();
-      payload.append("model", model);
-      payload.append("country", country);
-      payload.append("room", room);
-      payload.append("usage", usage);
-      payload.append("extras", extras);
-      payload.append("email", email);
+    // POST payload a Google Apps Scriptnek
+    const payload = new URLSearchParams();
+    payload.append("model", model);
+    payload.append("country", country);
+    payload.append("room", room);
+    payload.append("usage", usage);
+    payload.append("extras", extras);
+    payload.append("email", email);
 
-      try {
-        await fetch(ENDPOINT_URL, {
-          method: "POST",
-          body: payload
-          // NINCS extra header -> sima form POST, nincs CORS gond
-        });
+    try {
+      await fetch(ENDPOINT_URL, {
+        method: "POST",
+        body: payload,
+      });
 
-        alert(
-          "Thank you! Your configuration has been sent.\n" +
+      alert(
+        "Thank you! Your configuration has been sent.\n" +
           "Please check your inbox – we’ve also sent you a confirmation email."
-        );
+      );
 
-        if (form) form.reset();
-      } catch (err) {
-        console.error(err);
-        alert(
-          "Something went wrong while sending your request.\n" +
+      if (form) form.reset();
+    } catch (err) {
+      console.error(err);
+      alert(
+        "Something went wrong while sending your request.\n" +
           "Please try again later or contact us at hello@riverworks.ch."
-        );
-      }
-    };
+      );
+    }
+  };
 
-    if (form) {
-      form.addEventListener("submit", handler);
-    }
-    if (submitBtn) {
-      submitBtn.addEventListener("click", handler);
-    }
+  if (form) {
+    form.addEventListener("submit", handler);
   }
+
+  if (submitBtn) {
+    submitBtn.addEventListener("click", handler);
+  }
+}
 
