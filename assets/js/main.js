@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitBtn = configRoot.querySelector('button[type="submit"]');
 
     // IDE: a frissen bevezetett webalkalmazás URL-je (/exec végű!)
-    const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwxf4tffBFtlnPEbP1tqdblJv8ZfP4iKYAQP025l_BCc0380TlAJ6tzZGV22pzmgRhpJA/exec";
+    const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycby_I3JFc1fwIEIRO-DMoyYBdaRg8YB0OJ33S4L9IVBmJ4iVh3dvUWVAlntGa_VlCLHKUw/exec";
 
     const handler = async (e) => {
       if (e) e.preventDefault();
