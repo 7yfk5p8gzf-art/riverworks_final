@@ -145,10 +145,12 @@ function applyLanguage(lang) {
   });
 }
 
+
 document.addEventListener("DOMContentLoaded", () => {
   // default language
   applyLanguage("en");
 
+  // language switching
   document.addEventListener("click", (e) => {
     const btn = e.target.closest(".rw-lang button");
     if (!btn) return;
@@ -157,4 +159,39 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.classList.add("active");
     applyLanguage(lang);
   });
+
+  // configurator submit -> send to Google Apps Script
+  const form = document.querySelector(".rw-configurator form");
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const model = form.querySelector("select")?.value || "";
+      const country = form.querySelector('input[type="text"]')?.value || "";
+      const roomInput = form.querySelectorAll('input[type="text"]')[1];
+      const room = roomInput ? roomInput.value : "";
+      const usage = form.querySelector("textarea")?.value || "";
+      const email = form.querySelector('input[type="email"]')?.value || "";
+
+      const extras = Array.from(form.querySelectorAll('.rw-checkbox-group input[type="checkbox"]'))
+        .filter(ch => ch.checked)
+        .map(ch => ch.parentElement.textContent.trim())
+        .join(", ");
+
+      const payload = { model, country, room, usage, extras, email };
+
+      try {
+        await fetch("https://script.google.com/macros/s/AKfycbwcER3-TxvrvSLdxmDTU_DRgNMsJdohN0Wsn9pQqd3UK1nIkQRDpy5zu8sw_tczJSEkiQ/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        form.reset();
+        alert("Thank you! Your request has been sent.");
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong. Please try again later or contact us by email.");
+      }
+    });
+  }
 });
