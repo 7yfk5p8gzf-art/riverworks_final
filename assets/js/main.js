@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .join(", ");
 
       const target = "ipkobalint@gmail.com"; // ide érkezzenek a leadek
-      const subject = encodeURIComponent("Riverworks configuration request");
+      const subject = encodeURIComponent("Configuration request");
       const bodyLines = [
         "Model: " + model,
         "Country: " + country,
