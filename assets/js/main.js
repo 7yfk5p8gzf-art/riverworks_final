@@ -164,41 +164,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // configurator submit -> open email with pre-filled body
   const form = document.querySelector(".rw-configurator form");
-  if (form) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+if (form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
 
-      const model = form.querySelector("select")?.value || "";
-      const country = form.querySelector('select[name="country"]')?.value || "";
-      const roomInput = form.querySelector('input[type="text"]');
-      const room = roomInput ? roomInput.value : "";
-      const usage = form.querySelector("textarea")?.value || "";
-      const email = form.querySelector('input[type="email"]')?.value || "";
+    const model   = form.querySelector("select")?.value || "";
+    const country = form.querySelector('select[name="country"]')?.value || "";
+    const room    = form.querySelector('input[type="text"]')?.value || "";
+    const usage   = form.querySelector("textarea")?.value || "";
+    const email   = form.querySelector('input[type="email"]')?.value || "";
 
-      const extras = Array.from(form.querySelectorAll('.rw-checkbox-group input[type="checkbox"]'))
-  .filter(ch => ch.checked)
-  .map(ch => ch.parentElement.textContent.trim())
-  .join(", ");
+    const extras = Array.from(
+      form.querySelectorAll(".rw-checkbox-group input[type='checkbox']")
+    )
+      .filter(ch => ch.checked)
+      .map(ch => ch.parentElement.textContent.trim())
+      .join(", ");
 
-alert("Thank you! Your configuration request is being prepared as an email.");
+    alert("Thank you! Your configuration request is being prepared as an email.");
 
-const target = "ipkobalint@gmail.com";
- // ide érkezzenek a leadek
-      const subject = encodeURIComponent("Configuration request");
-      const bodyLines = [
-        "Model: " + model,
-        "Country: " + country,
-        "Room / placement: " + room,
-        "Usage: " + usage,
-        "Extras: " + (extras || "-"),
-        "Customer email: " + email
-      ];
-      const body = encodeURIComponent(bodyLines.join("\n"));
+    const target  = "ipkobalint@gmail.com";
+    const subject = encodeURIComponent("Configuration request");
 
-      const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
-      window.location.href = mailtoUrl;
+    const bodyLines = [
+      "Model: " + model,
+      "Country: " + country,
+      "Room / placement: " + room,
+      "Usage: " + usage,
+      "Extras: " + (extras || "--"),
+      "Customer email: " + email
+    ];
 
-      form.reset();
+    const body = encodeURIComponent(bodyLines.join("\n"));
+
+    const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
+
+    window.location.href = mailtoUrl;
+
+    form.reset();
+  });
+}
+
     });
   }
 });
