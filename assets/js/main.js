@@ -168,7 +168,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = configRoot.querySelector("form");
     const submitBtn = configRoot.querySelector("button[type='submit']");
 
-    const ENDPOINT_URL = "IDE_MÁSOLD_BE_A_WEB_APP_URL-T"; // https://script.google.com/macros/s/....../exec
+    const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycby5kAlNbm8nq21zAVGdFbh_O_nEnEnow33i1K9Ts2A02GDBT6C64yJKD5Zk7-aon0Kg/exec";
+
 
     const handler = async (e) => {
       if (e) e.preventDefault();
