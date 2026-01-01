@@ -160,8 +160,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = configRoot.querySelector("form");
     const submitBtn = configRoot.querySelector("button[type='submit']");
 
-    const ENDPOINT_URL =
-      "https://script.google.com/macros/s/AKfycby5kAlNbm8nq21zAVGdFbh_O_nEnE0w33i1K9Ts2A02GDBT6C64yJKD5Zk7-aon0Kg/exec"; // <-- ezt cseréld a SAJÁT web app URL-edre, ha más
+   
+    const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycby5KAlNbm8nQa7lI2AGVdFbh_O_nEnEmow33i1K9Ts2A02GDBT6C64yJKD5Zk7-aon0Ke/exec";
 
     const handler = async (e) => {
       if (e) e.preventDefault();
