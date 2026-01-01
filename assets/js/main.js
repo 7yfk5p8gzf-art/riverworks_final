@@ -162,13 +162,15 @@ document.addEventListener("DOMContentLoaded", () => {
     applyLanguage(lang);
   });
 
-   // configurator submit -> open email with pre-filled body
+     // configurator submit -> send data to Google Apps Script
   const configRoot = document.querySelector(".rw-configurator");
   if (configRoot) {
     const form = configRoot.querySelector("form");
     const submitBtn = configRoot.querySelector("button[type='submit']");
 
-    const handler = (e) => {
+    const ENDPOINT_URL = "IDE_MÁSOLD_BE_A_WEB_APP_URL-T"; // https://script.google.com/macros/s/....../exec
+
+    const handler = async (e) => {
       if (e) e.preventDefault();
 
       const model   = configRoot.querySelector("select")?.value || "";
@@ -180,30 +182,33 @@ document.addEventListener("DOMContentLoaded", () => {
       const extras = Array.from(
         configRoot.querySelectorAll(".rw-checkbox-group input[type='checkbox']")
       )
-        .filter((ch) => ch.checked)
-        .map((ch) => ch.parentElement.textContent.trim())
-        .join(", ");
+        .filter(ch => ch.checked)
+        .map(ch => ch.parentElement.textContent.trim());
 
-      alert("Thank you! Your configuration request is being prepared as an email.");
+      try {
+        await fetch(ENDPOINT_URL, {
+          method: "POST",
+          mode: "no-cors",              // CORS hibák elkerülése
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model,
+            country,
+            room,
+            usage,
+            extras,
+            email
+          })
+        });
 
-      const target  = "ipkobalint@gmail.com"; // ide érkezzenek a leadek
-      const subject = encodeURIComponent("Configuration request");
+        alert("Köszönjük! A konfigurációs kérésed megérkezett. 1–2 munkanapon belül jelentkezünk e-mailben.");
+        if (form) form.reset();
 
-      const bodyLines = [
-        "Model: " + model,
-        "Country: " + country,
-        "Room / placement: " + room,
-        "Usage: " + usage,
-        "Extras: " + (extras || "--"),
-        "Customer email: " + email
-      ];
-
-      const body = encodeURIComponent(bodyLines.join("\n"));
-      const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
-
-      window.location.href = mailtoUrl;
-
-      if (form) form.reset();
+      } catch (err) {
+        console.error(err);
+        alert("Hiba történt a küldés közben. Kérlek próbáld újra, vagy írj közvetlenül ide: hello@riverworks.ch");
+      }
     };
 
     if (form) {
@@ -213,6 +218,6 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.addEventListener("click", handler);
     }
   }
-});
+
 
 
