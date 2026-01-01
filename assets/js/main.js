@@ -158,9 +158,54 @@ document.addEventListener("DOMContentLoaded", () => {
   const configRoot = document.querySelector(".rw-configurator");
   if (configRoot) {
     const form = configRoot.querySelector("form");
+      const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbw7CZOYf65GIjfGCG6evbi3Oyhg5W9S3RHjdcv2sC_gjlpsUHTDzZs1SX63Yxp38V4u0g/exec";
+
     const submitBtn = configRoot.querySelector("button[type='submit']");
 
-    const handler = (e) => {
+    const handler = async (e) => {
+  if (e) e.preventDefault();
+
+  const model = configRoot.querySelector("select")?.value || "";
+  const country = configRoot.querySelector("select[name='country']")?.value || "";
+  const room =
+    configRoot.querySelector("input[name='room']")?.value ||
+    configRoot.querySelector("input[type='text']")?.value ||
+    "";
+  const usage = configRoot.querySelector("textarea")?.value || "";
+  const email = configRoot.querySelector("input[type='email']")?.value || "";
+
+  const extras = Array.from(
+    configRoot.querySelectorAll(".rw-checkbox-group input[type='checkbox']")
+  )
+    .filter((ch) => ch.checked)
+    .map((ch) => ch.parentElement.textContent.trim());
+
+  try {
+    await fetch(ENDPOINT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model,
+        country,
+        room,
+        usage,
+        email,
+        extras,
+      }),
+    });
+
+    alert("Thank you! Your configuration request has been sent. We'll email you shortly.");
+
+    if (form) form.reset();
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong. Please try again later.");
+  }
+};
+
       if (e) e.preventDefault();
 
       const model =
