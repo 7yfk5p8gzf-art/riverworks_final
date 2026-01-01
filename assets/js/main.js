@@ -146,6 +146,7 @@ function applyLanguage(lang) {
 }
 
 
+
 document.addEventListener("DOMContentLoaded", () => {
   // default language
   applyLanguage("en");
@@ -178,13 +179,19 @@ document.addEventListener("DOMContentLoaded", () => {
         .map(ch => ch.parentElement.textContent.trim())
         .join(", ");
 
-      const payload = { model, country, room, usage, extras, email };
+      const formData = new FormData();
+      formData.append("model", model);
+      formData.append("country", country);
+      formData.append("room", room);
+      formData.append("usage", usage);
+      formData.append("extras", extras);
+      formData.append("email", email);
 
       try {
         await fetch("https://script.google.com/macros/s/AKfycbwcER3-TxvrvSLdxmDTU_DRgNMsJdohN0Wsn9pQqd3UK1nIkQRDpy5zu8sw_tczJSEkiQ/exec", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+          body: formData,
+          mode: "no-cors"
         });
         form.reset();
         alert("Thank you! Your request has been sent.");
