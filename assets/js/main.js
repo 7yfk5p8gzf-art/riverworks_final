@@ -157,41 +157,50 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = e.target.closest(".rw-lang button");
     if (!btn) return;
     const lang = btn.dataset.lang;
-    document.querySelectorAll(".rw-lang button").forEach(b => b.classList.remove("active"));
+    document
+      .querySelectorAll(".rw-lang button")
+      .forEach((b) => b.classList.remove("active"));
     btn.classList.add("active");
     applyLanguage(lang);
   });
 
-     // configurator submit -> send data to Google Apps Script
+  // configurator submit -> send data to Google Apps Script
   const configRoot = document.querySelector(".rw-configurator");
   if (configRoot) {
     const form = configRoot.querySelector("form");
     const submitBtn = configRoot.querySelector("button[type='submit']");
 
-    const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycby5kAlNbm8nq21zAVGdFbh_O_nEnEnow33i1K9Ts2A02GDBT6C64yJKD5Zk7-aon0Kg/exec";
-
+    const ENDPOINT_URL =
+      "https://script.google.com/macros/s/AKfycby5kAlNbm8nq21zAVGdFbh_O_nEnE0w33i1K9Ts2A02GDBT6C64yJKD5Zk7-aon0Kg/exec"; // <-- a TE URL-ed
 
     const handler = async (e) => {
       if (e) e.preventDefault();
 
-      const model   = configRoot.querySelector("select")?.value || "";
-      const country = configRoot.querySelector('select[name="country"]')?.value || "";
-      const room    = configRoot.querySelector('input[type="text"]')?.value || "";
-      const usage   = configRoot.querySelector("textarea")?.value || "";
-      const email   = configRoot.querySelector('input[type="email"]')?.value || "";
+      const model = configRoot.querySelector("select")?.value || "";
+      const country =
+        configRoot.querySelector('select[name="country"]')?.value || "";
+      const room =
+        configRoot.querySelector('input[name="room"]')?.value ||
+        configRoot.querySelector('input[type="text"]')?.value ||
+        "";
+      const usage = configRoot.querySelector("textarea")?.value || "";
+      const email =
+        configRoot.querySelector('input[type="email"]')?.value || "";
 
       const extras = Array.from(
-        configRoot.querySelectorAll(".rw-checkbox-group input[type='checkbox']")
+        configRoot.querySelectorAll(
+          ".rw-checkbox-group input[type='checkbox']"
+        )
       )
-        .filter(ch => ch.checked)
-        .map(ch => ch.parentElement.textContent.trim());
+        .filter((ch) => ch.checked)
+        .map((ch) => ch.parentElement.textContent.trim());
 
       try {
         await fetch(ENDPOINT_URL, {
           method: "POST",
-          mode: "no-cors",              // CORS hibák elkerülése
+          mode: "no-cors",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             model,
@@ -199,16 +208,19 @@ document.addEventListener("DOMContentLoaded", () => {
             room,
             usage,
             extras,
-            email
-          })
+            email,
+          }),
         });
 
-        alert("Köszönjük! A konfigurációs kérésed megérkezett. 1–2 munkanapon belül jelentkezünk e-mailben.");
+        alert(
+          "Köszönjük! A konfigurációs kérésed megérkezett. 1–2 munkanapon belül jelentkezünk e-mailben."
+        );
         if (form) form.reset();
-
       } catch (err) {
         console.error(err);
-        alert("Hiba történt a küldés közben. Kérlek próbáld újra, vagy írj közvetlenül ide: hello@riverworks.ch");
+        alert(
+          "Hiba történt a küldés közben. Kérlek próbáld újra, vagy írj nekünk: hello@riverworks.ch"
+        );
       }
     };
 
@@ -219,6 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.addEventListener("click", handler);
     }
   }
-
+});
 
 
