@@ -168,27 +168,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // alapértelmezett nyelv
   applyLanguage("en");
 
-  // ----- CONFIGURATOR FORM -> MAILTO EMAIL -----
+    // configurator submit -> send data to Google Apps Script
   const configRoot = document.querySelector(".rw-configurator");
   if (configRoot) {
     const form = configRoot.querySelector("form");
-    const submitBtn = configRoot.querySelector("button[type='submit']");
+    const submitBtn = configRoot.querySelector('button[type="submit"]');
 
-    const handler = (e) => {
+    // IDE: a frissen bevezetett webalkalmazás URL-je (/exec végű!)
+    const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbwxf4tffBFtlnPEbP1tqdblJv8ZfP4iKYAQP025l_BCc0380TlAJ6tzZGV22pzmgRhpJA/exec";
+
+    const handler = async (e) => {
       if (e) e.preventDefault();
 
       const model =
         configRoot.querySelector("select")?.value || "";
       const country =
-        configRoot.querySelector("select[name='country']")?.value || "";
-      const room =
-        configRoot.querySelector("input[name='room']")?.value ||
-        configRoot.querySelector("input[type='text']")?.value ||
-        "";
+        configRoot.querySelector('select[name="country"]')?.value || "";
+      const roomInput = configRoot.querySelector('input[name="room"]')
+        || configRoot.querySelector('input[type="text"]');
+      const room = roomInput ? roomInput.value : "";
       const usage =
         configRoot.querySelector("textarea")?.value || "";
       const email =
-        configRoot.querySelector("input[type='email']")?.value || "";
+        configRoot.querySelector('input[type="email"]')?.value || "";
 
       const extras = Array.from(
         configRoot.querySelectorAll(".rw-checkbox-group input[type='checkbox']")
@@ -197,31 +199,40 @@ document.addEventListener("DOMContentLoaded", () => {
         .map((ch) => ch.parentElement.textContent.trim())
         .join(", ");
 
-      alert(
-        "Thank you! Your configuration request is being prepared as an email."
-      );
+      // minimális ellenőrzés
+      if (!email) {
+        alert("Please enter your email address.");
+        return;
+      }
 
-      const target = "ipkobalint@gmail.com";
-      const subject = encodeURIComponent(
-        "Configuration request – Riverworks"
-      );
-      const bodyLines = [
-        "Configuration request",
-        "",
-        "Model: " + model,
-        "Country: " + country,
-        "Room / placement: " + room,
-        "Usage: " + usage,
-        "Extras: " + (extras || "--"),
-        "Customer email: " + email,
-      ];
-      const body = encodeURIComponent(bodyLines.join("\n"));
+      const payload = new URLSearchParams();
+      payload.append("model", model);
+      payload.append("country", country);
+      payload.append("room", room);
+      payload.append("usage", usage);
+      payload.append("extras", extras);
+      payload.append("email", email);
 
-      const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
+      try {
+        await fetch(ENDPOINT_URL, {
+          method: "POST",
+          body: payload
+          // NINCS extra header -> sima form POST, nincs CORS gond
+        });
 
-      window.location.href = mailtoUrl;
+        alert(
+          "Thank you! Your configuration has been sent.\n" +
+          "Please check your inbox – we’ve also sent you a confirmation email."
+        );
 
-      if (form) form.reset();
+        if (form) form.reset();
+      } catch (err) {
+        console.error(err);
+        alert(
+          "Something went wrong while sending your request.\n" +
+          "Please try again later or contact us at hello@riverworks.ch."
+        );
+      }
     };
 
     if (form) {
@@ -231,4 +242,4 @@ document.addEventListener("DOMContentLoaded", () => {
       submitBtn.addEventListener("click", handler);
     }
   }
-});
+
