@@ -154,69 +154,54 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // configurator submit -> send data to Google Apps Script
+  // configurator submit -> open email with pre-filled body
   const configRoot = document.querySelector(".rw-configurator");
   if (configRoot) {
     const form = configRoot.querySelector("form");
     const submitBtn = configRoot.querySelector("button[type='submit']");
 
-   
-  const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycby5kAlNw8mJq7iIzGVAdvFbh_O_nEnElmow33i1k9Ts2A02GDtT6C64yjKDS2K7-aon0Kg/exec";
-
-
-
-  
-
-
-    const handler = async (e) => {
+    const handler = (e) => {
       if (e) e.preventDefault();
 
-      const model = configRoot.querySelector("select")?.value || "";
+      const model =
+        configRoot.querySelector("select")?.value || "";
       const country =
-        configRoot.querySelector('select[name="country"]')?.value || "";
+        configRoot.querySelector("select[name='country']")?.value || "";
       const room =
-        configRoot.querySelector('input[name="room"]')?.value ||
-        configRoot.querySelector('input[type="text"]')?.value ||
+        configRoot.querySelector("input[name='room']")?.value ||
+        configRoot.querySelector("input[type='text']")?.value ||
         "";
-      const usage = configRoot.querySelector("textarea")?.value || "";
+      const usage =
+        configRoot.querySelector("textarea")?.value || "";
       const email =
-        configRoot.querySelector('input[type="email"]')?.value || "";
+        configRoot.querySelector("input[type='email']")?.value || "";
 
       const extras = Array.from(
-        configRoot.querySelectorAll(
-          ".rw-checkbox-group input[type='checkbox']"
-        )
+        configRoot.querySelectorAll(".rw-checkbox-group input[type='checkbox']")
       )
         .filter((ch) => ch.checked)
-        .map((ch) => ch.parentElement.textContent.trim());
+        .map((ch) => ch.parentElement.textContent.trim())
+        .join(", ");
 
-      try {
-        await fetch(ENDPOINT_URL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            model,
-            country,
-            room,
-            usage,
-            extras,
-            email
-          })
-        });
+      alert("Thank you! Your configuration request is being prepared as an email.");
 
-        alert(
-          "Köszönjük! A konfigurációs kérésed megérkezett. 1–2 munkanapon belül jelentkezünk e-mailben."
-        );
-        if (form) form.reset();
-      } catch (err) {
-        console.error(err);
-        alert(
-          "Hiba történt a küldés közben. Kérlek próbáld újra, vagy írj nekünk: hello@riverworks.ch"
-        );
-      }
+      const target = "ipkobalint@gmail.com";
+      const subject = encodeURIComponent("Configuration request");
+      const bodyLines = [
+        "Model: " + model,
+        "Country: " + country,
+        "Room / placement: " + room,
+        "Usage: " + usage,
+        "Extras: " + (extras || "--"),
+        "Customer email: " + email,
+      ];
+
+      const body = encodeURIComponent(bodyLines.join("\n"));
+      const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
+
+      window.location.href = mailtoUrl;
+
+      if (form) form.reset();
     };
 
     if (form) {
@@ -227,6 +212,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 });
-
-
-
