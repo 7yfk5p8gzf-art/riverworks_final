@@ -147,6 +147,7 @@ function applyLanguage(lang) {
 
 
 
+
 document.addEventListener("DOMContentLoaded", () => {
   // default language
   applyLanguage("en");
@@ -161,15 +162,15 @@ document.addEventListener("DOMContentLoaded", () => {
     applyLanguage(lang);
   });
 
-  // configurator submit -> send to Google Apps Script
+  // configurator submit -> open email with pre-filled body
   const form = document.querySelector(".rw-configurator form");
   if (form) {
-    form.addEventListener("submit", async (e) => {
+    form.addEventListener("submit", (e) => {
       e.preventDefault();
 
       const model = form.querySelector("select")?.value || "";
-      const country = form.querySelector('input[type="text"]')?.value || "";
-      const roomInput = form.querySelectorAll('input[type="text"]')[1];
+      const country = form.querySelector('select[name="country"]')?.value || "";
+      const roomInput = form.querySelector('input[type="text"]');
       const room = roomInput ? roomInput.value : "";
       const usage = form.querySelector("textarea")?.value || "";
       const email = form.querySelector('input[type="email"]')?.value || "";
@@ -179,26 +180,22 @@ document.addEventListener("DOMContentLoaded", () => {
         .map(ch => ch.parentElement.textContent.trim())
         .join(", ");
 
-      const formData = new FormData();
-      formData.append("model", model);
-      formData.append("country", country);
-      formData.append("room", room);
-      formData.append("usage", usage);
-      formData.append("extras", extras);
-      formData.append("email", email);
+      const target = "ipkobalint@gmail.com"; // ide érkezzenek a leadek
+      const subject = encodeURIComponent("Riverworks configuration request");
+      const bodyLines = [
+        "Model: " + model,
+        "Country: " + country,
+        "Room / placement: " + room,
+        "Usage: " + usage,
+        "Extras: " + (extras || "-"),
+        "Customer email: " + email
+      ];
+      const body = encodeURIComponent(bodyLines.join("\n"));
 
-      try {
-        await fetch("https://script.google.com/macros/s/AKfycbwcER3-TxvrvSLdxmDTU_DRgNMsJdohN0Wsn9pQqd3UK1nIkQRDpy5zu8sw_tczJSEkiQ/exec", {
-          method: "POST",
-          body: formData,
-          mode: "no-cors"
-        });
-        form.reset();
-        alert("Thank you! Your request has been sent.");
-      } catch (err) {
-        console.error(err);
-        alert("Something went wrong. Please try again later or contact us by email.");
-      }
+      const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
+      window.location.href = mailtoUrl;
+
+      form.reset();
     });
   }
 });
