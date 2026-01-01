@@ -161,7 +161,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitBtn = configRoot.querySelector("button[type='submit']");
 
    
-    const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycby5KAlNbm8nQa7lI2AGVdFbh_O_nEnEmow33i1K9Ts2A02GDBT6C64yJKD5Zk7-aon0Ke/exec";
+  const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycby5kAlNw8mJq7iIzGVAdvFbh_O_nEnElmow33i1k9Ts2A02GDtT6C64yjKDS2K7-aon0Kg/exec";
+
+
+
+  
+
 
     const handler = async (e) => {
       if (e) e.preventDefault();
