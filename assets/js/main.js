@@ -185,21 +185,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
       alert("Thank you! Your configuration request is being prepared as an email.");
 
+      
       const target = "ipkobalint@gmail.com";
-      const subject = encodeURIComponent("Configuration request");
+      const subject = encodeURIComponent("Riverworks — configuration request");
+
       const bodyLines = [
-        "Model: " + model,
-        "Country: " + country,
-        "Room / placement: " + room,
-        "Usage: " + usage,
-        "Extras: " + (extras || "--"),
-        "Customer email: " + email,
+        "── Riverworks configuration request ──",
+        "",
+        "MODEL",
+        model || "--",
+        "",
+        "COUNTRY",
+        country || "--",
+        "",
+        "PLACEMENT",
+        room || "--",
+        "",
+        "USAGE / IDEAS",
+        usage || "--",
+        "",
+        "OPTIONS SELECTED",
+        extras || "--",
+        "",
+        "CUSTOMER EMAIL",
+        email || "--",
+        "",
+        "--------------------------------------",
+        "This message was generated from the Riverworks configurator."
       ];
-
-      const body = encodeURIComponent(bodyLines.join("\n"));
+      const body = encodeURIComponent(bodyLines.join("
+"));
       const mailtoUrl = `mailto:${target}?subject=${subject}&body=${body}`;
-
       window.location.href = mailtoUrl;
+
 
       if (form) form.reset();
     };
