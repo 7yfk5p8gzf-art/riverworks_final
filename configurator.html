@@ -24,35 +24,71 @@
     <button data-lang="hu">HU</button>
   </div>
 </header>
+
 <main class="rw-main">
+  <section class="rw-section rw-configurator">
+    <header class="rw-section-header">
+      <h1 data-i18n="config_title">Configuration request</h1>
+      <p data-i18n="config_intro">
+        Tell us which model you’re interested in, where the aquarium will be, and how you plan to use it.
+        We’ll get back to you with a tailored recommendation and price indication.
+      </p>
+    </header>
 
-<section class="rw-section">
-  <h1 data-i18n="config_title">Configuration request</h1>
-  <p data-i18n="config_intro">Tell us which model, where you live and how you want to use the tank, and we’ll prepare a tailored offer.</p>
+    <form class="rw-form rw-form-grid">
+      <div class="rw-form-column">
+        <h2 class="rw-form-title">Project basics</h2>
 
-  <form class="rw-form">
-    <label>
-      <span data-i18n="config_model_label">Model</span>
-      <select>
-        <option>S</option>
-        <option>M</option>
-        <option>L</option>
-        <option>Custom</option>
-      </select>
-    </label>
-    <label>
-      <span data-i18n="config_country_label">Country</span>
-      <input type="text" placeholder="Switzerland, Hungary, etc." />
-    </label>
-    <label>
-      <span data-i18n="config_usage_label">How do you plan to use it?</span>
-      <textarea rows="4" placeholder="River-style aquascape, high flow fish, biotope layout, ..."></textarea>
-    </label>
-    <button type="submit" class="btn primary" data-i18n="config_submit">Send request</button>
-  </form>
-</section>
+        <label>
+          <span data-i18n="config_model_label">Model</span>
+          <select>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>Custom</option>
+          </select>
+        </label>
 
+        <label>
+          <span data-i18n="config_country_label">Country</span>
+          <input type="text" placeholder="Switzerland, Hungary, etc." />
+        </label>
+
+        <label>
+          <span data-i18n="config_room_label">Room / placement</span>
+          <input type="text" placeholder="Living room wall, room divider, office, studio..." />
+        </label>
+      </div>
+
+      <div class="rw-form-column">
+        <h2 class="rw-form-title">Usage & contact</h2>
+
+        <label>
+          <span data-i18n="config_usage_label">How do you plan to use it?</span>
+          <textarea rows="4" placeholder="River-style aquascape, high flow fish, biotope layout, etc."></textarea>
+        </label>
+
+        <label>
+          <span data-i18n="config_extras_label">Extras you are interested in</span>
+          <div class="rw-checkbox-group">
+            <label><input type="checkbox" /> ATO (auto top-off)</label>
+            <label><input type="checkbox" /> Extra lighting options</label>
+            <label><input type="checkbox" /> Cabinet / furniture package</label>
+            <label><input type="checkbox" /> Delivery & on-site setup</label>
+          </div>
+        </label>
+
+        <label>
+          <span data-i18n="config_email_label">Email</span>
+          <input type="email" placeholder="you@example.com" />
+        </label>
+
+        <button type="submit" class="btn primary" data-i18n="config_submit">Send request</button>
+      </div>
+    </form>
+  </section>
 </main>
+
 <footer class="rw-footer">
   <p>© Riverworks — Hidden-tech river style aquariums</p>
 </footer>

@@ -29,6 +29,9 @@ const translations = {
     config_model_label: "Model",
     config_country_label: "Country",
     config_usage_label: "How do you plan to use it?",
+    config_room_label: "Room / placement",
+    config_extras_label: "Extras you are interested in",
+    config_email_label: "Email",
     config_submit: "Send request"
   },
   de: {
@@ -60,6 +63,9 @@ const translations = {
     config_model_label: "Modell",
     config_country_label: "Land",
     config_usage_label: "Wie möchtest du es nutzen?",
+    config_room_label: "Raum / Platzierung",
+    config_extras_label: "Optionale Extras, die dich interessieren",
+    config_email_label: "E-Mail",
     config_submit: "Anfrage senden"
   },
   fr: {
@@ -91,6 +97,9 @@ const translations = {
     config_model_label: "Modèle",
     config_country_label: "Pays",
     config_usage_label: "Comment comptez-vous l’utiliser ?",
+    config_room_label: "Pièce / emplacement",
+    config_extras_label: "Options supplémentaires qui vous intéressent",
+    config_email_label: "E-mail",
     config_submit: "Envoyer la demande"
   },
   hu: {
