@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // IDE a legutóbb bevezetett /exec URL
   const ENDPOINT_URL =
-    "https://script.google.com/macros/s/AKfycbw4ffBf1nPfEDpP1tqdb1JV8ZfP4iKYAPQ251_BCC03B0TAJ36tzGGV22pmgRhpJA/exec";
+    "https://script.google.com/macros/s/AKfycbxp7shlhmVg7z66WhL0Gdf71HajgmWSlIK6yJ_Sjq3TlQRXSvy0GiIR_I9OaizNUaPMRw/exec";
 
   const handler = async (e) => {
     if (e) e.preventDefault();
